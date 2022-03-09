@@ -1,6 +1,8 @@
-import React from "react";
+import { type } from "os";
+import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Categories, categoryState, toDoSelector } from "../Components/atoms"
+import CreateCategory from "./CreateCategory";
 import CreateToDo from "./CreateToDo";
 import ToDo from "./ToDo";
 
@@ -11,9 +13,14 @@ function ToDoList() {
     setCategory(event.currentTarget.value as any);
   };
   console.log(toDos);
+  localStorage.setItem(category,JSON.stringify(toDos));
+  const saved = localStorage.getItem("DONE");
+  /// need to figure out!!!
+  
   return (
     <div>
       <h1>To Dos</h1>
+      <CreateCategory />
       <hr />
       <select value={category} onInput={onInput}>
         <option value={Categories.TO_DO}>To Do</option>
@@ -24,6 +31,7 @@ function ToDoList() {
       {toDos?.map((toDo) => (
         <ToDo key={toDo.id} {...toDo} />
       ))}
+      
     </div>
   );
 }
